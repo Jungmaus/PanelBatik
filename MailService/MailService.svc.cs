@@ -46,7 +46,7 @@ namespace MailService
             body += "Bu adres ile şifrenizi değiştirebilirsiniz. Teşekkürler.";
             var message = new MailMessage();
             message.To.Add(new MailAddress(mail));
-            message.From = new MailAddress("jungmausoftware@gmail.com");
+            message.From = new MailAddress("email@gmail.com");
             message.Subject = "Şifre Yenileme | BATIK";
             message.Body = body;
             message.IsBodyHtml = true;
