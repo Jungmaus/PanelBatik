@@ -1,0 +1,51 @@
+﻿@model IList<PanelBatik.Models.OperationClass.UrunModel>
+
+@{
+    ViewBag.Title = "KategoriyeAitUrunler";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<h2>'@ViewBag.kategoriAd' Kategorisine ait ürünler</h2>
+<br/><br/>
+
+
+<div class="col-lg-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Tarihe Göre Ürün Listesi
+        </div>
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+            <div style="float: right;">
+                Bir şey yazın: <input type="text" maxlength="30" placeholder="Ne Arıyorsunuz ?"/>
+            </div>
+            <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                <tr>
+                    <th>Ürün Fotoğrafı</th>
+                    <th>Ürün Adı</th>
+                    <td><b>Ürün Açıklaması</b></td>
+                    <th>Stok Durumu</th>
+                    <th>Düzenle</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="gradeU">
+                            <td><img src="@item.PicPath" style="width: 85px; height: 100px;"/></td>
+                            <td>@item.Ad</td>
+                            <td>@item.Aciklama</td>
+                            <td>@item.Stok</td>
+                            <td><a href="@Url.Action("UrunEdit", "Panel",new{Id=item.Id})"><button class="btn btn-info" type="button" id="btnEdit">Edit <span class="glyphicon glyphicon-search"></span></button></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,25 @@
+﻿@model PanelBatik.Models.OperationClass.SifreDegistirModel
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<br/>
+<label style="margin-left: 4%;">Şifre Değiştir</label>
+<br />
+
+@using (Ajax.BeginForm("SifreUpdate", "Operation", new AjaxOptions { HttpMethod = "POST", OnSuccess = "alert('Şifreniz güncellenmiştir.')", OnFailure = "alert('Bir hata oluştu, şifreleriniz eşleşmiyor olabilir. Tekrar deneyin.')" }))
+{
+    @Html.AntiForgeryToken();
+
+    <label>Eski Şifre: </label>
+    @Html.PasswordFor(x => x.EskiSifre, new { placeholder = "Eski Şifreniz", @class = "form-control", maxlength = "30", required = "required" })
+    <br />
+    <label>Yeni Şifre: </label>
+    @Html.PasswordFor(x => x.YeniSifre, new { placeholder = "Yeni Şifreniz", @class = "form-control", maxlength = "30", required = "required" })
+    <br />
+    <label>Yeni Şifre(Tekrar): </label>
+    @Html.PasswordFor(x => x.YeniSifreTekrar, new { placeholder = "Tekrar Yeni Şifreniz", maxlength = "30", @class = "form-control", required = "required" })
+    <br />
+    <button class="btn btn-info">Güncelle <span class="glyphicon glyphicon-save"></span></button>
+
+}

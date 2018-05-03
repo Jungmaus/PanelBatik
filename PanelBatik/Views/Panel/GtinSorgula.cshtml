@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "GtinSorgula";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<div class="panel-body">
+
+    <h2>GTIN Numarası ile Ürün Bulabilirsiniz.</h2>
+    <br /><br />
+
+    <label>GTIN NO: </label> <input type="text" class="form-control" id="inputGtin" name="GtinNo" placeholder="GTIN NO" required="required" />
+    <br />
+    <button class="btn btn-info" id="btnSorgula">Sorgula <span class="glyphicon glyphicon-search"></span></button>
+    <br /><br />
+
+    <table class="table table-bordered" id="gUrunList">
+        <thead>
+            <tr>
+                <th>İlgili Resim</th>
+                <th>Ürün Adı</th>
+                <th>Stok Adeti</th>
+                <th>Açıklama</th>
+                <th>Düzenle</th>
+            </tr>
+        </thead>
+        <tbody id=""></tbody>
+    </table>
+
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(() => {
+
+        $("#gUrunList").hide();
+
+        $("#btnSorgula").click(() => {
+            $("#btnSorgula").attr("disabled", true);
+            var gtinNo = $("#inputGtin").val();
+          
+
+            $.ajax({
+                method: "GET",
+                url: "@Url.Action("GetUrunwGtin", "Data")" + "?gtinNo=" + gtinNo,
+                datatype: "json",
+                success: (data) => {
+
+                        var text = "";
+                        for (var i = 0; i < data.length; i++) {
+                            text += "<tr class='gradeU'>";
+                            text += "<td><img src='" + data[i].PicPath + "' style='width:100px;height:100px;'></td>";
+                            text += "<td>" + data[i].Ad + "</td>";
+                            text += "<td>" + data[i].Stok + "</td>";
+                            text += "<td>" + data[i].Aciklama + "</td>";
+                            text += "<td><a href='@Url.Action("UrunEdit", "Panel")/" +
+                                data[i].Id +
+                                "'><button class='btn btn-info'>Edit <span class='glyphicon glyphicon-search'></span></button></a></td>";
+                            text += "</tr>";
+                        }
+                        $("table#gUrunList > tbody").html(text);
+
+                        if (!data.length) {
+                        $("table#gUrunList > tbody").html("<b style='color:red;'>Herhangi bir ürün bulunamadı.</b>");
+                    }
+                },
+                onfailure: () => {
+                    alert("Ürün listesi alınırken bir hata oluştu.");
+                }
+            });
+            setTimeout(function() {
+                    $("#gUrunList").show();
+                    $("#btnSorgula").attr("disabled", false);
+                },
+                2000);
+
+        });
+
+    });
+</script>

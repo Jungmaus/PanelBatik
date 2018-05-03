@@ -1,0 +1,48 @@
+﻿@model PanelBatik.Models.OperationClass.SifreDegistirModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PrivateUri</title>
+    <link href="~/DesignFiles/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+
+<div style="margin: 0 auto;">
+    <h2>Şifreniz güncellendikten sonra, otomatik olarak giriş sayfasına yönlendirileceksiniz.</h2>
+    <br/><br/>
+
+    @using (Html.BeginForm("PrivateUri", "Panel", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(x=>x.EskiSifre,new{value=Model.EskiSifre})
+
+        <label>Yeni Şifreniz: </label>
+        @Html.PasswordFor(x => x.YeniSifre, new {@class = "form-control", maxlength = "30", placeholder = "Yeni Şifreniz",required="required"})
+        if (Html.ValidationMessageFor(x => x.YeniSifre) != null)
+        {
+            <label style="color: red;"><br/>@Html.ValidationMessageFor(x=>x.YeniSifre)</label>
+        }
+        <br/>
+        <label>Yeni Şifreniz (Tekrar): </label>
+        @Html.PasswordFor(x => x.YeniSifreTekrar, new {@class = "form-control", maxlength = "30", placeholder = "Yeni Şifreniz (Tekrar)", required = "required" })
+        if (Html.ValidationMessageFor(x => x.YeniSifreTekrar) != null)
+        {
+            <label style="color: red;"><br/>@Html.ValidationMessageFor(x=>x.YeniSifreTekrar)</label>
+        }
+        <br/>
+        <button class="btn btn-info">Güncelle <span class="glyphicon glyphicon-save"></span> </button>
+        if (ViewBag.msg != null)
+        {
+            <label style="color: red;">@ViewBag.msg</label>
+        }
+    }
+</div>
+</body>
+</html>

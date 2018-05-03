@@ -1,0 +1,48 @@
+﻿@model PanelBatik.Models.OperationClass.UrunEkleModel
+
+@{
+    ViewBag.Title = "YeniUrun";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+<center>
+    <div class="row" style="max-width: 60%;">
+
+        <center><b>Yeni Ürün Ekle</b></center>
+        <br />
+        @using (Html.BeginForm("YeniUrun", "Panel", FormMethod.Post,new{enctype="multipart/form-data"}))
+        {
+            @Html.AntiForgeryToken()
+
+            <label>Ürün Adı: </label>
+            @Html.TextBoxFor(x => x.Ad, new { @class = "form-control", required = "required", placeholder = "Ürün Adı", maxlength = "30" })
+            <br /><br/>
+            <label>Kategori: </label> @Html.DropDownList("kategoriler")
+            <br /><br/>
+            <label>Stok Adeti: </label>
+            @Html.TextBoxFor(x => x.Stok, new { @class = "form-control", type = "number", required = "required", placeholder = "Stok Adeti" })
+            <br/><br/>
+            <label>Açıklama: </label>
+            @Html.TextAreaFor(x=>x.Aciklama,new{maxlength="250",@class="form-control",placeholder="Ürün Açıklaması (max.250)"})
+            <br /><br/>
+            <label>Ürün Fiyatı: </label>
+            @Html.TextBoxFor(x=>x.Fiyat,new{@class="form-control",placeholder="Ürün Fiyatı",@step="0.01",required="required"})
+            if (Html.ValidationMessageFor(x => x.Fiyat) != null)
+            {
+                <label style="color: red;"><br/>@Html.ValidationMessageFor(x=>x.Fiyat)</label>
+            }
+            <br/><br/>
+            <label>Ürün Fotoğrafı: </label>
+            <input type="file" name="Resim" />
+            <br /><br/>
+            <button class="btn btn-info">Ekle <span class="glyphicon glyphicon-save"></span></button>
+        }
+        @{
+            if (ViewBag.msg != null)
+            {
+                <label style="color: green;">@ViewBag.msg</label>
+            }
+        }
+    </div>
+</center>
+
+<br/><br /><br/>

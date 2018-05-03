@@ -1,0 +1,59 @@
+﻿@model PanelBatik.Models.OperationClass.KisiselAyarModel
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+@using (Ajax.BeginForm("KisiselBilgilerUpdate", "Operation", new AjaxOptions { HttpMethod = "POST", OnSuccess = "KisiselGuncelSuccess()", OnFailure = "KisiselGuncelFailure()",OnBegin = "KisiselBeforeSend()"}))
+{
+    @Html.AntiForgeryToken()
+
+    <center><img src="@Model.FotografYolu" style="height: 200px; width: 200px;" /></center>
+    <br />
+
+    <label style="margin-left: 4%;">Kişisel Bilgiler</label>
+    <br />
+
+    <label>Ad: </label>
+    @Html.TextBoxFor(x => x.Ad, new { value = Model.Ad, @class = "form-control", placeholder = "Adınız", maxlength = "25", required = "required" })
+
+    <br />
+    <label>Soyad: </label>
+    @Html.TextBoxFor(x => x.Soyad, new { value = Model.Soyad, @class = "form-control", placeholder = "Soyadınız", maxlength = "25", required = "required" })
+
+    <br />
+    <label>Email: </label>
+    @Html.TextBoxFor(x => x.Email, new { value = Model.Email, @class = "form-control", placeholder = "Email Adresiniz", maxlength = "50", type = "email", required = "required" })
+
+    <br />
+    <label>Telefon Numarası: </label>
+    @Html.TextBoxFor(x => x.TelNo, new { value = Model.TelNo, @class = "form-control", placeholder = "Telefon Numaranız", maxlength = "30",type="number", required = "required" })
+
+    <br />
+    <button class="btn btn-info" type="submit" id="kisiselAyarbtn">Güncelle <span class="glyphicon glyphicon-save"></span></button>
+
+    <div id="divMsgArea">
+
+    </div>
+
+
+}
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+
+    var KisiselGuncelSuccess = () => {
+        alert('İşleminiz başarılı bir şekilde gerçekleştirilmiştir.');
+        $("#kisiselAyarbtn").attr("disabled", false);
+    }
+
+    var KisiselGuncelFailure = () => {
+        alert('Bir nedenden dolayı işleminiz gerçekleştirilemedi. Lütfen sayfayı yenileyin ve yeniden deneyin.');
+        $("#kisiselAyarbtn").attr("disabled", false);
+    }
+
+    var KisiselBeforeSend = () => {
+        $("#kisiselAyarbtn").attr("disabled", true);
+    }
+
+</script>

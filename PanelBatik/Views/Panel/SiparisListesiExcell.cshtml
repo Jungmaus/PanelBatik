@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "SiparisListesiExcell";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<center>
+    <h2>@ViewBag.siparisCount adet siparişin excell dosyasına işlenmesi için lütfen aşağıdaki butona basınız.</h2>
+
+    <br /><br />
+
+    <button class="btn btn-info" id="btnAktar">Excell'e Aktar <span class="glyphicon glyphicon-save"></span></button>
+</center>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $("#btnAktar").click(() => {
+        $("#btnAktar").attr("disabled", true);
+        var url = '@Url.Action("SiparisGridExportToExcel", "Operation")';
+        window.open(url);
+        $("#btnAktar").attr("disabled", false);
+    });
+</script>
+

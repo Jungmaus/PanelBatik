@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Ayarlar";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<h2>Profil Ayarları</h2>
+<br /><br />
+
+@{ Html.RenderAction("KisiselBilgilerPart", "Part");}
+
+<br/>
+
+@{ Html.RenderAction("SifreDegistirPart", "Part");}
+
+<br /><br/>

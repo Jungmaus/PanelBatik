@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "GostergePaneli";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+
+<label>Panel > GostergePaneli</label>
+<br />
+
+@{ Html.RenderAction("GetCountPart", "Part");}
+
+<br /><br />
+
+@{ Html.RenderAction("GetSiparisTable", "Part");}

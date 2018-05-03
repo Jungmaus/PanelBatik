@@ -1,0 +1,103 @@
+﻿@model PanelBatik.Models.OperationClass.UrunModel
+
+@{
+    ViewBag.Title = "UrunEdit";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<br />
+<a href="@Request.UrlReferrer.AbsoluteUri"><button class="btn btn-default"><span class="glyphicon glyphicon-backward"> </span> Geri Dön</button></a>
+
+<br />
+
+<h2>' @Model.Ad ' adlı ürünü düzenliyorsunuz.</h2>
+<br />
+
+@using (Html.BeginForm("UrunEdit", "Panel", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(x=>x.KategoriAd,new{value=Model.KategoriAd})
+    @Html.HiddenFor(x=>x.KategoriId,new{value=Model.KategoriId})
+    @Html.HiddenFor(x=>x.PicPath,new{value=Model.PicPath})
+
+    <center><img src="@Model.PicPath" style="height: 200px; width: 200px;"/></center>
+    <br/>
+
+    <label>Ürün Adı: </label>
+    @Html.TextBoxFor(x => x.Ad, new {@class = "form-control", maxlength = "30", placeholder = "Ürün Adı", value = Model.Ad, required = "required"})
+    if (Html.ValidationMessageFor(x => x.Ad) != null)
+    {
+        <label><br/>@Html.ValidationMessageFor(x=>x.Ad)</label>
+    }
+    <br/>
+    @Html.DropDownList("kategoriler")
+    <br/><br/>
+    <label>Stok Adedi: </label>
+    @Html.TextBoxFor(x => x.Stok, new {@class = "form-control", type = "number", placeholder = "Stok Adeti", value = Model.Stok, required = "required"})
+    if (Html.ValidationMessageFor(x => x.Stok) != null)
+    {
+        <label><br/>@Html.ValidationMessageFor(x=>x.Stok)</label>
+    }
+    <br/>
+    <label>Ürün Fiyatı: </label>
+    @Html.TextBoxFor(x=>x.Fiyat,new{@class="form-control",placeholder="Ürün Fiyatı",step="0.01", value=Model.Fiyat,required="required"})
+    if (Html.ValidationMessageFor(x => x.Fiyat) != null)
+    {
+        <label style="color: red;"><br/>@Html.ValidationMessageFor(x=>x.Fiyat)</label>
+    }
+    <br/>
+    <label>Açıklama: </label>
+    @Html.TextAreaFor(x=>x.Aciklama, new { @class = "form-control",rows="3", placeholder = "Ürün Açıklaması (max.250)",maxlength="250", value = Model.Aciklama})
+    if (Html.ValidationMessageFor(x => x.Aciklama) != null)
+    {
+        <label><br/>@Html.ValidationMessageFor(x=>x.Aciklama)</label>
+    }
+    <br/>
+    <br/>
+    <button class="btn btn-info" type="submit" id="btnGuncelle">Güncelle <span class="glyphicon glyphicon-save"></span></button>
+    <button class="btn btn-danger" type="button" id="btnUrunSil" style="margin-left: 2%;">Sil <span class="glyphicon glyphicon-remove"></span></button>
+}
+@{
+    if (ViewBag.msg != null)
+    {
+        <label style="color: green;"><br/>@ViewBag.msg</label>
+    }
+}
+
+<br/><br/>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+
+
+        $("#btnUrunSil").click(() => {
+            $("#btnGuncelle").attr("disabled", true);
+            $("#btnUrunSil").attr("disabled", true);
+            $.ajax({
+                method: "POST",
+                url: "@Url.Action("UrunSil","Operation")/" + @Model.Id,
+                onsuccess: () => {
+                    alert("Ürün başarılı bir şekilde silinmiştir. Ürün Listesi sayfasına yönlendiriliyorsunuz.");
+                    window.location = "@Url.Action("UrunListesi","Panel")";
+                },
+                onfailure: () => {
+                    alert("Bir hatadan dolayı işleminiz gerçekleştirilememiştir. Lütfen tekrar deneyiniz.");
+                }
+            }).then(() => {
+                $("#btnGuncelle").attr("disabled", false);
+                $("#btnUrunSil").attr("disabled", false);
+                alert("Ürün başarılı bir şekilde silinmiştir. Ürün Listesi sayfasına yönlendiriliyorsunuz.");
+                window.location = "@Url.Action("UrunListesi","Panel")";
+            });
+
+        });
+
+    });
+
+
+
+</script>

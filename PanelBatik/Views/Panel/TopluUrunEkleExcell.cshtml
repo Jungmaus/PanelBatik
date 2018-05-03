@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "TopluUrunEkleExcell";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<h2>Ürünleri ekleyeceğiniz EXCELL dosyasını seçin ve 'Ürünleri Ekle' buttonuna basın.</h2>
+<br/>
+
+<label>Excell tablonuzdaki verilerin karşılıkları;</label>
+<br/>
+<ul>
+    <li>(1. Alan) = Ürün Adı</li>
+    <li>(2. Alan) = Ürün Açıklaması</li>
+    <li>(3. Alan) = Ürünün Resim Yolu</li>
+    <li>(4. Alan) = Ürünün Kategori Adı</li>
+    <li>(5. Alan) = Ürünün Stok Adeti (Sadece Sayı)</li>
+    <li>(6. Alan) = Ürünün Fiyatı (Sadece Sayı)</li>
+</ul>
+<br/>
+<h3>Eğer veri tiplerine uygun veri girişi sağlamaz iseniz hata alırsınız.</h3>
+
+<br/><br/>
+
+
+@using (Html.BeginForm("TopluUrunEkleExcell", "Panel", FormMethod.Post, new {enctype = "multipart/form-data"}))
+{
+    @Html.AntiForgeryToken()
+
+    <label>EXCELL dosyanızı seçiniz: </label> <input type="file" name="excellFile"/>
+    <br/>
+    <button class="btn btn-info">Yükle <span class="glyphicon glyphicon-upload"></span></button>
+}
+@{
+    if (ViewBag.msg != null)
+    {
+        <label style="color: red;">@ViewBag.msg</label>
+    }else if (ViewBag.sc != null)
+    {
+        <label style="color: green;">@ViewBag.sc</label>
+    }
+    if (ViewBag.errorList != null)
+    {
+        <label style="color: red;"><br/><br/>@ViewBag.errorList<br/></label>
+    }
+}
+

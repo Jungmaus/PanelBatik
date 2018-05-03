@@ -1,0 +1,33 @@
+﻿@model PanelBatik.Models.Kategori
+
+@{
+    ViewBag.Title = "KategoriEkle";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<h2>Kategori Ekle</h2>
+<br />
+
+@using (Html.BeginForm("KategoriEkle", "Panel"))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.TextBoxFor(x => x.Ad, new {@class = "form-control", placeholder = "Kategori Adı", required = "required"})
+    if (Html.ValidationMessageFor(x => x.Ad) != null)
+    {
+        <label style="color: red;"><br/>@Html.ValidationMessageFor(x=>x.Ad)</label>
+    }
+    <br />
+
+    <button class="btn btn-info">Kategori Ekle <span class="glyphicon glyphicon-save"></span></button>
+
+}
+@{
+    if (ViewBag.msg != null)
+    {
+        <label style="color: green;"><br/>@ViewBag.msg</label>
+    }else if (ViewBag.ms != null)
+    {
+        <label style="color: red;"><br/>@ViewBag.ms</label>
+    }
+}

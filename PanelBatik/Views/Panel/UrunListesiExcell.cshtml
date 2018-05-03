@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "UrunListesiExcell";
+    Layout = "~/Views/Shared/_LayoutPanel.cshtml";
+}
+
+<center>
+    <h2>@ViewBag.urunCount adet ürünün excell dosyasına işlenmesi için lütfen aşağıdaki butona basınız.</h2>
+
+    <br /><br />
+
+    <button class="btn btn-info" id="btnAktar">Excell'e Aktar <span class="glyphicon glyphicon-save"></span></button>
+</center>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    $("#btnAktar").click(() => {
+        $("#btnAktar").attr("disabled", true);
+        var url = '@Url.Action("UrunGridExportToExcel", "Operation")';
+        window.open(url);
+    });
+</script>
